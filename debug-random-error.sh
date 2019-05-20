@@ -2,8 +2,7 @@
 ## debug-random-error
 ## version 0.0.1 - initial
 ##################################################
-. ${SH2}/error.sh
-debug-random-error() {
+debug-random-error() { 
   test $(( ${RANDOM} % 2 )) -eq 0
   echo success
 }
