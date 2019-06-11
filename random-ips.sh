@@ -34,7 +34,7 @@ random-ip-list-1() { # for loop
   local i
   for i in $( seq ${n} )
   do
-    echo $( random-256 ).$( random-256 ).$( random-256 ).$( random-256 )
+    random-ip
   done
 }
 random-ip-list-2() { # xargs serial
@@ -49,6 +49,9 @@ random-ip-list-4() { # xargs parallel without injection
     declare -xf random-ip
     yes | head -n ${n} | xargs -P ${concurrency} -i bash -c "random-ip"
   )
+}
+random-ip-list-5() {
+  true
 }
 random-ip-list() {
   ${FUNCNAME}-${method}
