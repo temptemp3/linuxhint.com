@@ -4,53 +4,49 @@
 ##################################################
 . ${SH2}/cecho.sh
 test-random-ips-template() {
-  { # tempalte
+  { # template
+    cecho green "${message} ..."
     local method
     local size
-    for size in ${sizes}
+    time for size in ${sizes}
     do
      cecho yellow size: ${size}
-     for method in ${methods}
+     time for method in ${methods}
      do
       cecho yellow method: ${method}
       time random-ips ${size} ${method}
      done
     done
+    cecho green "done ${message}"
   } 1>/dev/null
 }
 test-random-ips-1() {
   { # time (1) all
     local sizes
     local methods
-    sizes=(1 10 100)
-    methods={1..4}
-    cecho green "timing all methods ..."
+    local message
+    sizes="1 10 100"
+    methods="1 2"
+    message="timing serial methods"
     test-random-ips-template
-    cecho green "methods timed"
   } 1>/dev/null
 }
 test-random-ips-2() {
   { # time (2) parallel
-    cecho green "timing parallel methods ..."
-    local method
-    local size
-    for size in 100 500 1000
-    do
-     cecho yellow size: ${size}
-     for method in {3..4}
-     do
-      cecho yellow method: ${method}
-      time random-ips ${size} ${method}
-     done
-    done
-    cecho green "methods timed"
+    local sizes
+    local methods
+    local message
+    sizes="100 250 500"
+    methods="3 4"
+    message="timing parallel methods"
+    test-random-ips-template
   } 1>/dev/null
 }
 test-random-ips-3() {
-  { # time (3) 10k
-    cecho green "generating 10k random ips addresses ..."
-    time random-ips 10000 4 1>/dev/null
-    cecho green "done"
+  { # time (3) 1k
+    cecho green "generating 1k random ip addresses ..."
+    time random-ips 1000 4 1>/dev/null
+    cecho green "done generating 1k random ip addresses"
   }
 }
 test-random-ips() {
@@ -63,11 +59,13 @@ test-random-ips() {
     cecho green done loading ${_}
   }
   { # run tests
+    cecho green "running tests ..."
     local i
-    for i in 3 #$( seq ${tests} )
+    time for i in $( seq ${tests} )
     do
      ${FUNCNAME}-${i}
     done
+    cecho green "done running tests"
   }
   true
 }

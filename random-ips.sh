@@ -51,12 +51,28 @@ random-ip-list-4() { # xargs parallel without injection
   )
 }
 random-ip-list-5() {
-  true
+  local tmp
+  tmp=/tmp/fakef
+  {
+    yes |
+    xargs -P ${concurrency} -i bash -c "{ $( declare -f random-256 ) ; $( declare -f random-ip ) ; random-ip ; }" 
+  } > ${tmp} 2>/dev/null &
+  sleep 1
+  while [ $( wc -l < ${tmp} ) -lt ${n} ]
+  do
+   wc -l < ${tmp} 1>/dev/null
+   sleep 1
+  done
+  head -n ${n} ${tmp}
+  rm ${tmp}
+}
+random-ip-list-6() {
+  true # next generation random ip list function
 }
 random-ip-list() {
   ${FUNCNAME}-${method}
 }
-random-ips() { { local -i n ; n=${1} ; local -i method ; method="${2-1}" ; local -i concurrency ; concurrency=${3-1000} ; }
+random-ips() { { local -i n ; n=${1} ; local -i method ; method="${2-5}" ; local -i concurrency ; concurrency=${3-1000} ; }
   test ${n} -gt 0 || { ${FUNCNAME}-help ; false ; return ; }
   test ${method} -gt 0 || { ${FUNCNAME}-help ; false ; return ; }
   test ${concurrency} -gt 0 || { ${FUNCNAME}-help ; false ; return ; }
