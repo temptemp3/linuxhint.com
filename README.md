@@ -8,3 +8,6 @@ Example bash scripts for <https://linuxhint.com/category/bash-programming/>
      + map.sh
      + filter.sh
  + tests (test-*)
+ + curl
+ + debug
+ + subshell functions
