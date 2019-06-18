@@ -4,3 +4,4 @@ Example bash scripts for <https://linuxhint.com/category/bash-programming/>
      + join.sh
      + map.sh
      + filter.sh
+ + tests (test-*)
