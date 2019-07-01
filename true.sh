@@ -1,10 +1,10 @@
 #!/bin/bash
 ## true
-## version 0.0.1 - initial
+## version 0.0.2 - fix
 ##################################################
 declare -f "true" &>/dev/null || {
   true() {
-    true
+   command true
   }
 }
 ##################################################
