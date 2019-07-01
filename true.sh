@@ -1,6 +1,6 @@
 #!/bin/bash
 ## true
-## version 0.0.2 - fix
+## version 0.0.3 - fix
 ##################################################
 declare -f "true" &>/dev/null || {
   true() {
@@ -10,7 +10,7 @@ declare -f "true" &>/dev/null || {
 ##################################################
 if [ ${#} -eq 0 ] 
 then
- true
+ command true
 else
  exit 1 # wrong args
 fi
